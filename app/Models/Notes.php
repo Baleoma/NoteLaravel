@@ -9,4 +9,11 @@ class Notes extends Model
 {
     /** @use HasFactory<\Database\Factories\NotesFactory> */
     use HasFactory;
+
+    protected $fillable = ['title', 'content', 'user_id'];
+
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

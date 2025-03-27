@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tags extends Model
 {
+    protected $fillable = ['name'];
+
     /** @use HasFactory<\Database\Factories\TagsFactory> */
     use HasFactory;
 }
