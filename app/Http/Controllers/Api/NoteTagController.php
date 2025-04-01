@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\NoteTagRequest;
 use App\Http\Resources\Note_TagResource;
-use App\Models\Note_Tag;
+use App\Http\Resources\NoteResource;
+use App\Http\Resources\TagResource;
+use App\Models\NoteTag;
 use App\Models\Tag;
 use Illuminate\Http\Request;
-use Laravel\Prompts\Note;
+use App\Models\Note;
 
 class NoteTagController extends Controller
 {
@@ -17,7 +19,7 @@ class NoteTagController extends Controller
      */
     public function index()
     {
-        return Note_TagResource::collection(Note_Tag::all()); // Работает корректно
+        return Note_TagResource::collection(NoteTag::all()); // Работает корректно
     }
 
     /**
@@ -25,33 +27,33 @@ class NoteTagController extends Controller
      */
     public function store(NoteTagRequest $request)
     {
-        $created_notetags = Note_Tag::create($request->validated()); // Работает корректно
+        $created_notetags = NoteTag::create($request->validated()); // Работает корректно
 
         return new Note_TagResource($created_notetags);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(int $note_id)
-    {
-        return new Note_TagResource(Note_Tag::findOrFail($note_id)); // Выдает код 500. Мб неправильно передаю значения
+    public function show(int $id) { //Выводит конкретную связь
+        $noteTags = NoteTag::where('id', $id)->get();
+        return Note_TagResource::collection($noteTags);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function shownotes(int $tag_id)
     {
-        //По сути обновлять ее нет смысла
+        $tag = Tag::with('note')->findOrFail($tag_id); // Используйте полное пространство имен
+        return NoteResource::collection($tag->note);
     }
 
+    public function showtags(int $note_id)
+    {
+        $note = Note::with('tag')->findOrFail($note_id); // Используйте полное пространство имен
+        return TagResource::collection($note->tag);
+    }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Note_Tag $note_tag)
+    public function destroy(NoteTag $notetag)
     {
-        $note_tag->forceDelete(); // Такая же беда, как и везде
+        $notetag->forceDelete();
 
         return response(null, 204);
     }

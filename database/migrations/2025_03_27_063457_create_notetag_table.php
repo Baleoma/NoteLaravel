@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('note__tags', function (Blueprint $table) {
-            $table->ForeignId('note_id')->constrained('notes');
-            $table->ForeignId('tag_id')->constrained('tags');
+        Schema::create('note_tags', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('note_id')->constrained('notes')->onDelete('cascade');
+            $table->foreignId('tag_id')->constrained('tags')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('note__tags');
+        Schema::dropIfExists('note_tags');
     }
 };

@@ -9,6 +9,10 @@ class Tag extends Model
 {
     protected $fillable = ['name'];
 
-    /** @use HasFactory<\Database\Factories\TagsFactory> */
+    /** @use HasFactory<\Database\Factories\TagFactory> */
     use HasFactory;
+
+    public function note() {
+        return $this->belongsToMany(Note::class, 'note_tags');
+    }
 }

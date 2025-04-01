@@ -214,12 +214,14 @@ class NoteController extends Controller
     public function update(NoteRequest $request, Note $note)
     {
         $note->update($request->validated());
+
         return new NoteResource($note);
     }
 
     public function destroy(Note $note)
     {
-        $note->delete();
+        $note->delete(); //Не работает
+
         return response(null, 204);
     }
 }
