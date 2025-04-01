@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 /**
  * @OA\Info (
- *     title="Notes doc API",
+ *     title="Note doc API",
  *     version ="1.0.0"
  * ),
  * @OA\PathItem (

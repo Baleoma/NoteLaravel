@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Tags;
-use App\Models\Notes;
+use App\Models\Tag;
+use App\Models\Note;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Container\Attributes\Tag;
@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory(10)->create();
-        Tags::factory(10)->create();
-        Notes::factory(10)->create();
+        Tag::factory(10)->create();
+        Note::factory(10)->create();
     }
 }

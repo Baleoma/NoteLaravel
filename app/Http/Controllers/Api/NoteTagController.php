@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\NoteTagRequest;
 use App\Http\Resources\Note_TagResource;
 use App\Models\Note_Tag;
-use App\Models\Tags;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Laravel\Prompts\Note;
 
-class Note_TagController extends Controller
+class NoteTagController extends Controller
 {
     /**
      * Display a listing of the resource.
