@@ -7,7 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 
 
-class TagsResource extends JsonResource
+class TagResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

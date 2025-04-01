@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use function Symfony\Component\Translation\t;
 
-class TagsRequest extends FormRequest
+class NoteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +22,9 @@ class TagsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:255',
+            'title' => 'required',
+            'content' => 'required',
+            'user_id' => 'required',
         ];
     }
 }

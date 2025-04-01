@@ -3,40 +3,40 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TagsRequest;
-use App\Http\Resources\TagsResource;
+use App\Http\Requests\TagRequest;
+use App\Http\Resources\TagResource;
 use App\Models\Note;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
-class TagsController extends Controller
+class TagController extends Controller
 {
 
     public function index()
     {
-        return TagsResource::collection(Tag::all()); //Работает исправно
+        return TagResource::collection(Tag::all()); //Работает исправно
     }
 
 
-    public function store(TagsRequest $request)
+    public function store(TagRequest $request)
     {
         $created_tags = Tag::create($request->validated()); //Работает исправно
 
-        return new TagsResource($created_tags);
+        return new TagResource($created_tags);
     }
 
 
     public function show(string $id)
     {
-        return new TagsResource(Tag::findOrFail($id)); // Работает исправно
+        return new TagResource(Tag::findOrFail($id)); // Работает исправно
     }
 
 
-    public function update(TagsRequest $request, Tag $tag)
+    public function update(TagRequest $request, Tag $tag)
     {
         $tag->update($request->validated()); // Работает исправно
 
-        return new TagsResource($tag);
+        return new TagResource($tag);
     }
 
 

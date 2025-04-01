@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\NotesController;
-use App\Http\Controllers\Api\TagsController;
+use App\Http\Controllers\Api\NoteController;
+use App\Http\Controllers\Api\TagController;
 use App\Http\Controllers\Api\Note_TagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -12,8 +12,8 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::apiResources([
-    'tags' => TagsController::class,
-    'notes' => NotesController::class,
+    'tag' => TagController::class,
+    'note' => NoteController::class,
     'note_tag'=>Note_TagController::class,
 ]);
 
