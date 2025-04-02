@@ -94,6 +94,15 @@ use Illuminate\Support\Facades\Auth;
  *     path="/api/logout",
  *     summary="Выход пользователя",
  *     tags={"Auth"},
+ *     @OA\Parameter(
+ *         name="Token",
+ *         in="header",
+ *         description="Токен",
+ *         required=true,
+ *         @OA\Schema(
+ *             type="string"
+ *         )
+ *     ),
  *
  *     @OA\Response(
  *         response=200,

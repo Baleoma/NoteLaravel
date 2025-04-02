@@ -202,6 +202,17 @@
                 ],
                 "summary": "Выход пользователя",
                 "operationId": "8c6087e560734c9c142f64e043e4508c",
+                "parameters": [
+                    {
+                        "name": "Token",
+                        "in": "header",
+                        "description": "Токен",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Ok",
@@ -633,6 +644,329 @@
                 }
             }
         },
+        "/api/notetag": {
+            "get": {
+                "tags": [
+                    "Notetag"
+                ],
+                "summary": "Вывод всех связей",
+                "operationId": "e170c44df839d0f17910a0b8c23f5dbb",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "note_id": {
+                                                        "type": "integer",
+                                                        "example": 8
+                                                    },
+                                                    "tag_id": {
+                                                        "type": "integer",
+                                                        "example": 6
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Notetag"
+                ],
+                "summary": "Создание заметки",
+                "operationId": "5f65f52f9842fecab1517f7770aa7992",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "note_id",
+                                    "tag_id"
+                                ],
+                                "properties": {
+                                    "note_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "tag_id": {
+                                        "type": "integer",
+                                        "example": 6
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "note_id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "tag_id": {
+                                                    "type": "string",
+                                                    "example": 6
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/notetag/{id}": {
+            "get": {
+                "tags": [
+                    "Notetag"
+                ],
+                "summary": "Вывод связи по id",
+                "operationId": "46bea3e214cf0e2305327755b3c8e2bb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID заметки",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "note_id": {
+                                                        "type": "integer",
+                                                        "example": 8
+                                                    },
+                                                    "tag_id": {
+                                                        "type": "integer",
+                                                        "example": 6
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Notetag"
+                ],
+                "summary": "Удаление связи",
+                "operationId": "10fd7fc17fe537a7c8e98a529e022304",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID связи",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Успешное удаление (нет содержимого)"
+                    },
+                    "404": {
+                        "description": "Связи не найдена",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Note not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/notetag/tags/{note_id}": {
+            "get": {
+                "tags": [
+                    "Notetag"
+                ],
+                "summary": "Вывод всех тегов заметки",
+                "operationId": "f3e234d13d222a93e7c2b8ce10413d6c",
+                "parameters": [
+                    {
+                        "name": "note_id",
+                        "in": "path",
+                        "description": "ID заметки",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 6
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "ipsum"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-04-01T14:31:56.000000Z"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/notetag/notes/{tag_id}": {
+            "get": {
+                "tags": [
+                    "Notetag"
+                ],
+                "summary": "Вывод всех заметок связанных с этим тегом",
+                "operationId": "fbf210ee3bcf8312a3d9ba696efe880e",
+                "parameters": [
+                    {
+                        "name": "tag_id",
+                        "in": "path",
+                        "description": "ID тега",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 4
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "itaque"
+                                                    },
+                                                    "content": {
+                                                        "type": "string",
+                                                        "example": "Quaerat quisquam ipsa amet maxime. Dolor quasi autem temporibus et sint eveniet sit natus. Incidunt sit odio accusantium assumenda eos. Et iste sit quo voluptatem officiis."
+                                                    },
+                                                    "user_id": {
+                                                        "type": "integer",
+                                                        "example": 5
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-04-01T14:31:56.000000Z"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/tag": {
             "get": {
                 "tags": [
@@ -983,6 +1317,10 @@
         {
             "name": "Note",
             "description": "Note"
+        },
+        {
+            "name": "Notetag",
+            "description": "Notetag"
         },
         {
             "name": "Tag",

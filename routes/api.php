@@ -11,15 +11,17 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResources([
-    'tag' => TagController::class,
-    'note' => NoteController::class,
-    'notetag'=>NoteTagController::class,
-]);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResources([
+        'tag' => TagController::class,
+        'note' => NoteController::class,
+        'notetag' => NoteTagController::class,
+    ]);
+});
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/logout', [AuthController::class, 'logout']);
-Route::get('/notetag/tags/{note_id}', [NoteTagController::class, 'showtags']);
-Route::get('/notetag/notes/{tag_id}', [NoteTagController::class, 'shownotes']);
+Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::get('/notetag/tags/{note_id}', [NoteTagController::class, 'showtags'])->middleware('auth:sanctum');
+Route::get('/notetag/notes/{tag_id}', [NoteTagController::class, 'shownotes'])->middleware('auth:sanctum');
 
