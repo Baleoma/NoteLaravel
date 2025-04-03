@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\NoteRequest;
 use App\Http\Resources\NoteResource;
 use App\Models\Note;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 
 
@@ -219,7 +220,7 @@ class NoteController extends Controller
      */
     public function update(NoteRequest $request, Note $note)
     {
-        $this->authorize('update', $note);
+        Gate::authorize('update', $note);
         $note->update($request->validated());
         return new NoteResource($note);
     }
@@ -229,8 +230,10 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
-        $this->authorize('delete', $note);
+        Gate::authorize('delete', $note);
         $note->delete();
         return response()->noContent();
+
     }
+
 }
