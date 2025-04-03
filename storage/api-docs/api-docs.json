@@ -202,17 +202,6 @@
                 ],
                 "summary": "Выход пользователя",
                 "operationId": "8c6087e560734c9c142f64e043e4508c",
-                "parameters": [
-                    {
-                        "name": "Token",
-                        "in": "header",
-                        "description": "Токен",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "Ok",
@@ -246,7 +235,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/note": {
@@ -314,7 +308,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -409,7 +408,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/note/{id}": {
@@ -485,7 +489,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -520,7 +529,7 @@
                                     },
                                     "user_id": {
                                         "type": "integer",
-                                        "example": "6"
+                                        "example": 6
                                     }
                                 },
                                 "type": "object"
@@ -602,7 +611,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -641,7 +655,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/notetag": {
@@ -679,14 +698,35 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
                     "Notetag"
                 ],
-                "summary": "Создание заметки",
+                "summary": "Создание связи",
                 "operationId": "5f65f52f9842fecab1517f7770aa7992",
                 "requestBody": {
                     "required": true,
@@ -726,7 +766,7 @@
                                                     "example": 2
                                                 },
                                                 "tag_id": {
-                                                    "type": "string",
+                                                    "type": "integer",
                                                     "example": 6
                                                 }
                                             },
@@ -738,18 +778,15 @@
                             }
                         }
                     },
-                    "422": {
-                        "description": "Unprocessable Entity",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "The given data was invalid."
-                                        },
-                                        "errors": {
-                                            "type": "object"
+                                            "example": "Unauthenticated."
                                         }
                                     },
                                     "type": "object"
@@ -757,7 +794,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/notetag/{id}": {
@@ -771,7 +813,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID заметки",
+                        "description": "ID связи",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -806,8 +848,29 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -830,15 +893,15 @@
                     "204": {
                         "description": "Успешное удаление (нет содержимого)"
                     },
-                    "404": {
-                        "description": "Связи не найдена",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Note not found"
+                                            "example": "Unauthenticated."
                                         }
                                     },
                                     "type": "object"
@@ -846,7 +909,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/notetag/tags/{note_id}": {
@@ -900,8 +968,29 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/notetag/notes/{tag_id}": {
@@ -943,7 +1032,7 @@
                                                     },
                                                     "content": {
                                                         "type": "string",
-                                                        "example": "Quaerat quisquam ipsa amet maxime. Dolor quasi autem temporibus et sint eveniet sit natus. Incidunt sit odio accusantium assumenda eos. Et iste sit quo voluptatem officiis."
+                                                        "example": "Quaerat quisquam ipsa amet maxime."
                                                     },
                                                     "user_id": {
                                                         "type": "integer",
@@ -963,8 +1052,29 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/tag": {
@@ -1024,7 +1134,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -1082,6 +1197,22 @@
                             }
                         }
                     },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "422": {
                         "description": "Unprocessable Entity",
                         "content": {
@@ -1101,7 +1232,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/tag/{id}": {
@@ -1109,7 +1245,7 @@
                 "tags": [
                     "Tag"
                 ],
-                "summary": "Вывод конкретной заметки",
+                "summary": "Вывод конкретного тега",
                 "operationId": "b912a81e5a861308021ebc6e219983a9",
                 "parameters": [
                     {
@@ -1135,6 +1271,10 @@
                                                     "type": "integer",
                                                     "example": 3
                                                 },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "ipsum"
+                                                },
                                                 "created_at": {
                                                     "type": "string",
                                                     "format": "date-time",
@@ -1142,6 +1282,22 @@
                                                 }
                                             },
                                             "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
                                         }
                                     },
                                     "type": "object"
@@ -1157,7 +1313,7 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Note not found"
+                                            "example": "Tag not found"
                                         }
                                     },
                                     "type": "object"
@@ -1165,7 +1321,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -1231,6 +1392,22 @@
                             }
                         }
                     },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Тег не найден",
                         "content": {
@@ -1239,7 +1416,7 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Note not found"
+                                            "example": "Tag not found"
                                         }
                                     },
                                     "type": "object"
@@ -1266,7 +1443,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -1289,15 +1471,31 @@
                     "204": {
                         "description": "Успешное удаление (нет содержимого)"
                     },
-                    "404": {
-                        "description": "Тег не найдена",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Note not found"
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Тег не найден",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tag not found"
                                         }
                                     },
                                     "type": "object"
@@ -1305,7 +1503,20 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
             }
         }
     },

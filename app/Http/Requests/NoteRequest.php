@@ -11,7 +11,7 @@ class NoteRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class NoteRequest extends FormRequest
         return [
             'title' => 'required',
             'content' => 'required',
-            'user_id' => 'required',
+            'user_id' => 'nullable|exists:users,id',
         ];
     }
 }
