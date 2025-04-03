@@ -250,6 +250,22 @@
                 ],
                 "summary": "Вывод всех заметок",
                 "operationId": "859be9efef1d41b086ca790289bfdc39",
+                "parameters": [
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Направление сортировки (asc или desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "desc",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Ok",
@@ -328,8 +344,7 @@
                             "schema": {
                                 "required": [
                                     "title",
-                                    "content",
-                                    "user_id"
+                                    "content"
                                 ],
                                 "properties": {
                                     "title": {

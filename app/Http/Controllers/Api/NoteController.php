@@ -16,11 +16,24 @@ use Illuminate\Http\Request;
  *     summary="Вывод всех заметок",
  *     tags={"Note"},
  *     security={{"bearerAuth": {}}},
+ *     @OA\Parameter(
+ *         name="sort",
+ *         in="query",
+ *         description="Направление сортировки (asc или desc)",
+ *         required=false,
+ *         @OA\Schema(
+ *             type="string",
+ *             enum={"asc", "desc"},
+ *             default="desc"
+ *         )
+ *     ),
  *     @OA\Response(
  *         response=200,
  *         description="Ok",
  *         @OA\JsonContent(
- *             @OA\Property(property="data", type="array",
+ *             @OA\Property(
+ *                 property="data",
+ *                 type="array",
  *                 @OA\Items(
  *                     @OA\Property(property="id", type="integer", example=1),
  *                     @OA\Property(property="title", type="string", example="eum"),
@@ -56,7 +69,9 @@ use Illuminate\Http\Request;
  *         response=200,
  *         description="Ok",
  *         @OA\JsonContent(
- *             @OA\Property(property="data", type="object",
+ *             @OA\Property(
+ *                 property="data",
+ *                 type="object",
  *                 @OA\Property(property="id", type="integer", example=3),
  *                 @OA\Property(property="title", type="string", example="necessitatibus"),
  *                 @OA\Property(property="content", type="string", example="Tenetur repellat sapiente dignissimos dolorem culpa qui. Et nihil voluptatum quidem voluptatum repellat cum. Dolorem delectus doloribus expedita."),
@@ -82,7 +97,7 @@ use Illuminate\Http\Request;
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
- *             required={"title", "content", "user_id"},
+ *             required={"title", "content"},
  *             @OA\Property(property="title", type="string", example="Title Example"),
  *             @OA\Property(property="content", type="string", example="Content Example"),
  *             @OA\Property(property="user_id", type="integer", example=1)
@@ -92,7 +107,9 @@ use Illuminate\Http\Request;
  *         response=201,
  *         description="Created",
  *         @OA\JsonContent(
- *             @OA\Property(property="data", type="object",
+ *             @OA\Property(
+ *                 property="data",
+ *                 type="object",
  *                 @OA\Property(property="id", type="integer", example=11),
  *                 @OA\Property(property="title", type="string", example="Title Example"),
  *                 @OA\Property(property="content", type="string", example="Content Example"),
@@ -135,7 +152,9 @@ use Illuminate\Http\Request;
  *         response=200,
  *         description="Успешное обновление",
  *         @OA\JsonContent(
- *             @OA\Property(property="data", type="object",
+ *             @OA\Property(
+ *                 property="data",
+ *                 type="object",
  *                 @OA\Property(property="id", type="integer", example=1),
  *                 @OA\Property(property="title", type="string", example="Updated Title"),
  *                 @OA\Property(property="content", type="string", example="Updated content"),
@@ -193,9 +212,16 @@ class NoteController extends Controller
     /**
      * Вывод всех заметок
      */
-    public function index()
+    public function index(Request $request)
     {
-        return NoteResource::collection(Note::all());
+        $sortDirection = $request->input('sort', 'desc');
+
+        $allowedSortDirections = ['asc', 'desc'];
+        $sortDirection = in_array($sortDirection, $allowedSortDirections) ? $sortDirection : 'desc';
+
+        $notes = Note::orderBy('created_at', $sortDirection)->get();
+
+        return NoteResource::collection($notes);
     }
 
     /**
